@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,34 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1114359823
+    locked: 0
+  - name: BG1
+    uniqueID: 2716619983
+    locked: 0
+  - name: BG2
+    uniqueID: 3648581223
+    locked: 0
+  - name: BG3
+    uniqueID: 816847447
+    locked: 0
+  - name: Misc
+    uniqueID: 3561480595
+    locked: 0
+  - name: CaveShape
+    uniqueID: 3273779667
+    locked: 0
+  - name: ObjectsBehindPlayer
+    uniqueID: 2380732313
+    locked: 0
+  - name: Player
+    uniqueID: 3735046237
+    locked: 0
+  - name: ObjectsInFrontOfPlayer
+    uniqueID: 910418247
+    locked: 0
+  - name: Water
+    uniqueID: 737226097
     locked: 0

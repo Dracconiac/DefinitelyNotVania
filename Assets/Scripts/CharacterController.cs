@@ -1,63 +1,78 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-    private bool isJumping = false;
-    private float startY;
-    private float jumpTime = 0f;
-    private float jumpDuration = 0.3f;
+    [SerializeField] float moveSpeed = 3.5f;
+    [SerializeField] float jumpForce = 5f;
+    Vector2 moveInput;
+    Rigidbody2D rb;
+    Animator animator;
+    bool isRunning = false;
+
+    int JumpStateHash;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        JumpStateHash = Animator.StringToHash("Base Layer.jump");
+    }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (!isJumping)
-            {
-                startY = transform.position.y;
-                isJumping = true;
-                jumpTime = 0f;
-            }
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left * 5 * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector3.right * 5f * Time.deltaTime);
-        }
+        isRunning = Mathf.Abs(moveInput.x) > Mathf.Epsilon;
+        StartRunning();
+        FlipPlayer();
+    }
+    void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
 
-        if (Input.GetKey(KeyCode.W))
+    void OnJump(InputValue value)
+    {
+        if (value.isPressed)
         {
-            transform.Translate(Vector3.up * 5f * Time.deltaTime);
+            animator.SetBool("isMidair", true);
+            rb.velocity += new Vector2(0f, jumpForce);
+            animator.Play(JumpStateHash, 0, 0);
         }
+    }
 
-        if (Input.GetKey(KeyCode.S))
+
+    void StartRunning()
+    {
+        Vector2 playerVelocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+        rb.velocity = playerVelocity;
+        animator.SetBool("isRunning", isRunning);
+    }
+
+    void FlipPlayer()
+    {
+        if (isRunning)
         {
-            transform.Translate(Vector3.down * 5f * Time.deltaTime);
+            transform.localScale = new Vector2(Mathf.Sign(rb.velocity.x), 1f);
         }
+    }
 
-        if (isJumping)
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
         {
-            if (jumpTime < jumpDuration)
-            {
-                transform.Translate(Vector3.up * 5f * Time.deltaTime);
-                jumpTime += Time.deltaTime;
-            }
-            else
-            {
-                // Fall back to original Y
-                Vector3 pos = transform.position;
-                pos.y = Mathf.MoveTowards(pos.y, startY, 3f * Time.deltaTime);
-                transform.position = pos;
+            animator.SetBool("isMidair", false);
+        }
+    }
 
-                if (Mathf.Approximately(transform.position.y, startY))
-                {
-                    isJumping = false;
-                }
-            }
+        void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            animator.SetBool("isMidair", true);
         }
     }
 }
