@@ -12,20 +12,30 @@ public class CharacterController : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D rb;
     Animator animator;
+    Collider2D playerCollider;
+    LayerMask layerMaskGround;
     bool isRunning = false;
 
     int JumpStateHash;
+    int jumpCount = 0;
+
 
     void Start()
     {
+        layerMaskGround = LayerMask.GetMask("Ground");
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
         JumpStateHash = Animator.StringToHash("Base Layer.jump");
     }
 
     void Update()
     {
         isRunning = Mathf.Abs(moveInput.x) > Mathf.Epsilon;
+        if (playerCollider.IsTouchingLayers(layerMaskGround))
+        {
+            jumpCount = 0;
+        }
         StartRunning();
         FlipPlayer();
     }
@@ -36,10 +46,11 @@ public class CharacterController : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && jumpCount < 1) //double jump
         {
+            jumpCount++;
             animator.SetBool("isMidair", true);
-            rb.velocity += new Vector2(0f, jumpForce);
+            rb.velocity = new Vector2(0f, jumpForce);
             animator.Play(JumpStateHash, 0, 0);
         }
     }
@@ -68,7 +79,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-        void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {

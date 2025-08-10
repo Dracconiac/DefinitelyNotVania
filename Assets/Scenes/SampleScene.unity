@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 855352314}
   - component: {fileID: 855352313}
   - component: {fileID: 855352312}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CaveShapeTilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -3088,6 +3088,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 682658252, guid: e7ef8f50b6270134fb90562f950206df, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3122393455918912643, guid: e7ef8f50b6270134fb90562f950206df, type: 3}
       propertyPath: m_Name
       value: Player
