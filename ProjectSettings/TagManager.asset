@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Enemy
+  - Chest
+  - ButtonBase
+  - Lever
+  - ExitPortal
   layers:
   - Default
   - TransparentFX
@@ -14,13 +19,13 @@ TagManager:
   - UI
   - Ground
   - Ladders
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Background
+  - Bouncing
+  - Enemy
+  - Spirit
+  - Button
+  - Lever
   - 
   - 
   - 
@@ -57,18 +62,24 @@ TagManager:
   - name: Misc
     uniqueID: 3561480595
     locked: 0
-  - name: CaveShape
-    uniqueID: 3273779667
-    locked: 0
   - name: ObjectsBehindPlayer
     uniqueID: 2380732313
     locked: 0
   - name: Player
     uniqueID: 3735046237
     locked: 0
-  - name: ObjectsInFrontOfPlayer
-    uniqueID: 910418247
+  - name: Enemy
+    uniqueID: 2915008531
+    locked: 0
+  - name: CaveShapeBehindWater
+    uniqueID: 435873305
     locked: 0
   - name: Water
     uniqueID: 737226097
+    locked: 0
+  - name: CaveShape
+    uniqueID: 3273779667
+    locked: 0
+  - name: ObjectsInFrontOfPlayer
+    uniqueID: 910418247
     locked: 0
