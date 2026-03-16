@@ -51,5 +51,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "DefinitelyNotVania.sln"
+    "dotnet.defaultSolution": "DefinitelyNotVania.sln",
+    "github.copilot.enable": {
+        "*": false
+    }
 }
